@@ -1,10 +1,11 @@
-from scrapy                  import Spider
-from ..data.template         import Template
-from scrapy.http.response    import Response
+from scrapy               import Spider
+from data.template        import Template
+from utils.storage        import Storage
+from scrapy.http.response import Response
 
 class Bol(Spider):
 
-    def __init__(self, url, storage, pages = 1, **kwargs):
+    def __init__(self, storage, url, pages = 1, **kwargs):
         
         super().__init__("bol", **kwargs)
         self.storage    = storage

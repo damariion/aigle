@@ -1,4 +1,4 @@
-from data.template import Template
+from data.template   import Template
 from sqlite3         import connect, Row
 from os.path         import dirname, \
                             abspath, \
@@ -44,7 +44,7 @@ class Storage:
             )
 
             # temporary cache
-            self.cache[table] = self.read(table)
+            self.cache[table] = DataFrame(self.read(table))
 
     def serialise(self, template: Template):
 
@@ -81,12 +81,14 @@ class Storage:
         return response
     
     # micros
-    head     = lambda self, table:    DataFrame(self.cache[table]).head().to_dict()
-    tail     = lambda self, table:    DataFrame(self.cache[table]).tail().to_dict()
-    describe = lambda self, table:    DataFrame(self.cache[table]).describe().to_dict()
-    sample   = lambda self, table, n: DataFrame(self.cache[table]).sample(n).to_dict()
-    column   = lambda self, table, c: DataFrame(self.cache[table])[c].to_dict()
-    query    = lambda self, table, q: DataFrame(self.cache[table]).query(q).to_dict()
+    describe = lambda self, table:    self.cache[table].describe().to_dict()
+    memory   = lambda self, table:    self.cache[table].memory_usage().to_dict()
+    head     = lambda self, table, n: self.cache[table].head(n).to_dict()
+    tail     = lambda self, table, n: self.cache[table].tail(n).to_dict()
+    index    = lambda self, table, n: self.cache[table].iloc[n].to_dict()    
+    sample   = lambda self, table, n: self.cache[table].sample(n).to_dict()
+    column   = lambda self, table, c: self.cache[table][c].to_dict()
+    query    = lambda self, table, q: self.cache[table].query(q).to_dict()
 
 
     def __del__(self):
