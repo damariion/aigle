@@ -1,5 +1,5 @@
-from data.manager import Manager
 from pandas       import DataFrame
+from data.manager import Manager
 
 class Caching:
 
@@ -10,7 +10,7 @@ class Caching:
 
     def cache(self, table: str) -> DataFrame:
 
-        if table not in self.cache:
+        if table not in self.memory:
             
             self.manager.exec(f"SELECT * FROM {table}")
             self.memory[table] = self.manager.fetch()

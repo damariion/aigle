@@ -1,5 +1,5 @@
-from data.manager import Manager
 from caching      import Caching
+from data.manager import Manager
 
 class Micros:
 

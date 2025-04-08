@@ -1,7 +1,7 @@
-from sqlite3       import connect, Row
-from os.path       import dirname, join as pathify
 from os            import listdir
 from pandas        import DataFrame
+from os.path       import dirname, join as pathify
+from sqlite3       import connect, Row
 from datetime      import datetime
 from importlib     import import_module
 from data.template import Template

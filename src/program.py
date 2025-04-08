@@ -1,17 +1,17 @@
-from utils.micros import Micros
-from data.manager import Manager
 from pprint import pp
+from utils.visuals import Visuals
+from data.manager  import Manager
 
 class Program:
 
     def __init__(self):
         
         self.manager = Manager()
-        self.micros  = Micros(self.manager)
+        self.micros  = Visuals(self.manager)
 
     def main(self):
         
-        pp(self.micros.most_reviews("bol"))
+        pp(self.micros.best_brands("bol", 10))
 
     def __del__(self):
 
