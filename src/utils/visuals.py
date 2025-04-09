@@ -1,8 +1,9 @@
+from os.path             import dirname, join
+from datetime            import datetime
+from matplotlib          import use
 from data.manager        import Manager
 from utils.caching       import Caching
 import matplotlib.pyplot as plt
-from os.path             import dirname, join
-from datetime            import datetime
 
 class Visuals:
 
@@ -10,6 +11,9 @@ class Visuals:
         
         self.root    = dirname(dirname(__file__))
         self.caching = Caching(manager)
+        
+        # configuration
+        use('Agg')
 
     def save(self, name):
 
@@ -31,14 +35,15 @@ class Visuals:
         
         # configuration
         plt.style.use("ggplot")
-        plt.title  ("best performing brands")
-        plt.xlabel ("brand")
-        plt.ylabel ("5 star reviews")
-        plt.xticks (rotation = 45)
+        _, ax = plt.subplots()  # this is key for safety
+        
+        ax.set_title  ("best performing brands")
+        ax.set_xlabel ("brand")
+        ax.set_ylabel ("5 star reviews")
+        plt.xticks    (rotation = 45)
 
         # creation & storage
         plt.bar(data["brand"], data["reviews"])
-        plt.tight_layout()
         return self.save("best-performing-brands")
         
         

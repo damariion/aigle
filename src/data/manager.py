@@ -12,7 +12,8 @@ class Manager:
         
         # initialisation
         self.root     = dirname(dirname(__file__))
-        self.database = connect(pathify(self.root, "data", "base.db"))
+        self.database = connect(pathify(self.root, "data", "base.db"), 
+                                check_same_thread=0)
         self.cursor   = self.database.cursor()
         
         # configuration

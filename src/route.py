@@ -1,8 +1,8 @@
-from flask import Flask
+from flask import Flask, jsonify
 
-from ..utils.micros  import Micros
-from ..utils.caching import Manager
-from ..utils.visuals import Visuals
+from utils.micros  import Micros
+from data.manager  import Manager
+from utils.visuals import Visuals
 
 # definition
 flask   = Flask(__name__)
@@ -10,17 +10,20 @@ manager = Manager()
 micros  = Micros(manager)
 visuals = Visuals(manager)
 
+# utils
+json = lambda df: jsonify(df.to_dict())
+
 class Micros:
 
     @staticmethod
-    @flask.route("<table>/summarise")
+    @flask.route("/<table>/summarise")
     def summarise(table: str):
-        return micros.summarise(table).to_json()
+        return json(micros.summarise(table))
 
 class Visuals:
 
     @staticmethod
-    @flask.route("<table>/best_brands")
+    @flask.route("/<table>/best_brands")
     def best_brands(table: str):
         return {200:visuals.best_brands(table)}
 
